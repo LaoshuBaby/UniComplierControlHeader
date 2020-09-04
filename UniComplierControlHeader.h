@@ -13,6 +13,10 @@
 #define DEBUG
 #endif
 
+#ifdef _RELEASE
+#define RELEASE
+#endif
+
 //#define DEBUG
 //#define DEBUG_ARGUMENT
 //#define RELEASE
@@ -35,8 +39,10 @@
 //采用检测头文件中定义的方式来自动化定义系统控制
 //
 
-#ifdef (_WIN32
-
+#ifdef _WIN32
+#ifndef SYSTEM_WINDOWS
+#define SYSTEM_WINDOWS
+#endif // !SYSTEM_WINDOWS
 #endif // _WIN32_WINNT
 
 #ifdef linux
@@ -65,7 +71,9 @@
 #ifdef _MSC_VER
 #define SYSTEM_WINDOWS
 #if _MSC_VER>=1800 //MSVC++ 12.0 (Visual Studio 2013 version 12.0) and after
+#ifndef SDL_AVALIABLE
 #define SDL_AVALIABLE
+#endif
 #else if _MSC_VER<=1200 //MSVC++ 6.0 (Visual Studio 6.0 version 6.0) and before
 #define VC6_0
 #endif
