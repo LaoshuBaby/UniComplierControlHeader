@@ -1,12 +1,13 @@
 #pragma once
 
-//���ļ�����Ϊ��һ��ͨ�õĽ����ƽ̨�ṩ��ͷ��Ϣת��Ϊһ���������ڲ��ý�Ϊ�׶�������д�ɵĽӿ�
-//���������������ַ��ӵ�ͷ�ļ�Ԥ����ָ�ֻ��Ҫ����
+//本文件作用为起到一个通用的将多个平台提供的头信息转化为一个本程序内部用较为易懂的语言写成的接口
+//开发者无需记忆各种繁杂的头文件预处理指令，只需要负责
+//这个是旧版本的
 
 //
 //BASIC
-//Ĭ�ϲ��ֹ�����
-//�������ݿ��ں������Զ�����
+//默认不手工开启
+//部分内容可在后文中自动定义
 //
 
 #ifdef _DEBUG
@@ -17,22 +18,22 @@
 //#define DEBUG_ARGUMENT
 //#define RELEASE
 //#define PUBLISH
-//#define OpenMP_AVAILABLE //��OMP
-//#define SDL_AVALIABLE  //��C++11��sdl��飬Ŀǰ��֧��MSVC
+//#define OpenMP_AVAILABLE //开OMP
+//#define SDL_AVALIABLE  //开C++11的sdl检查，目前仅支持MSVC
 
 //
 //MODE
-//Ĭ���ֹ�����
+//默认手工开启
 //
 
-#define MODE_MILD     //��һ�㣬�ȹ�
-//#define MODE_VIOLENT//�������壬�����ø�����ܵ��˹�����
-//#define MODE_ARGUMENT//����
+#define MODE_MILD     //稳一点，先过
+//#define MODE_VIOLENT//激进主义，将采用更多可能的人工智能
+//#define MODE_ARGUMENT//传参
 
 //
 //SYSTEM
-//Ĭ�ϲ��ֹ�����
-//���ü��ͷ�ļ��ж���ķ�ʽ���Զ�������ϵͳ����
+//默认不手工开启
+//采用检测头文件中定义的方式来自动化定义系统控制
 //
 
 #ifdef (_WIN32
@@ -54,12 +55,12 @@
 //#define SYSTEM_IPADOS
 //#define SYSTEM_SOLARIS
 //#define SYSTEM_OTHERS
-//#define SYSTEM_MCU //��Ƭ��
+//#define SYSTEM_MCU //单片机
 
 //
 //COMPLIER
-//Ĭ�ϲ��ֹ�����
-//ͨ�����ֱ�ǽ��м��
+//默认不手工开启
+//通过各种标记进行检测
 //
 
 #ifdef _MSC_VER
@@ -77,8 +78,8 @@
 
 //
 //LANGUAGE
-//Ĭ���ֹ�����
-//�ڿ�����θ���ϵͳ�����Լ�ͷ�ļ���������ԣ����ܱȽ����ѣ������˹�ָ��
+//默认手工开启
+//在考虑如何根据系统环境以及头文件来检测语言，可能比较困难，初步人工指定
 //
 
 #define zh_CN
