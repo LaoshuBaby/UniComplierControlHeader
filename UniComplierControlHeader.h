@@ -29,7 +29,7 @@
 //
 
 #define MODE_MILD      //稳一点，先过
-//#define MODE_VIOLENT //激进主义，将采用更多可能的人工智能
+//#define MODE_VIOLENT //激进主义，将采用更多可能的实验性技术
 //#define MODE_ARGUMENT //允许传参
 //#define MODE_NOLOGO //不带LOGO
 
@@ -123,8 +123,8 @@ int main(int argc, char **argv)
 	    #define SYSTEM_WINDOWS
 	#endif // !SYSTEM_WINDOWS
 	#if _MSC_VER>=1800 //MSVC++ 12.0 (Visual Studio 2013 version 12.0) and after
-		#ifndef APPLICATION_SDL_AVALIABLE
-		    #define APPLICATION_SDL_AVALIABLE
+		#ifndef STANDARD_SDL_AVALIABLE
+		    #define STANDARD_SDL_AVALIABLE
 		#endif
 	#else if _MSC_VER<=1200 //MSVC++ 6.0 (Visual Studio 6.0 version 6.0) and before
 	    #define APPLICATION_VC6_0_FEATURE
@@ -157,10 +157,12 @@ switch (lid)
 	case 0x0804:
 #define zh_CN
 #define LANGUAGE_zh_CN
+#pragma  message("zh_CN")
 		break;
 	case 0x0409:
 #define en_US
 #define LANGUAGE_en_US
+#pragma  message("en_US")
 		break;
 }
 return 0;
@@ -185,17 +187,28 @@ return 0;
 #define
 #endif // __openmp
 
-
+//MULTI PROCESS
 //#define APPLICATION_OpenMP_AVAILABLE //允许OMP
 //#define APPLICATION_pThread_AVAILABLE //允许pThread
 //#define APPLICATION_MPI_AVAILABLE //允许MPI
 //#define APPLICATION_NUMA_AVAILABLE //允许NUMA
-//#define APPLICATION_SDL_AVALIABLE  //开C++11的sdl检查，目前仅支持MSVC
 
+//GUI
 #ifdef SYSTEM_WINDOWS && COMPLIER_MSVC
 #define APPLICATION_EASYX
 #endif // APPLICATION_EASYX
 
+//#define APPLICATION_MFC
+//#define APPLICATION_GTK
+//#define APPLICATION_QT
+//#define APPLICATION_OpenGL
+//#define APPLICATION_EASYX
+
+//
+//STANDARD
+//
+
+//#define STANDARD_SDL_AVALIABLE  //开C++11的sdl检查，目前仅支持MSVC
 
 //
 //REFERENCE
