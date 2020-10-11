@@ -57,6 +57,9 @@
 
 #ifdef linux
     #define SYSTEM_LINUX
+#ifdef __linux__
+    #define SYSTEM_LINUX
+	
 #include <sys/utsname.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -107,6 +110,7 @@ int main(int argc, char **argv)
 //#define ARCHITECTURE_arm //arm Any RISC精简指令集
 //#define ARCHITECTURE_MIPS //mips Any RISC精简指令集
 //#define ARCHITECTURE_RISC_V //RISCV Any RISC精简指令集
+//#define ARCHITECTURE_STM32 //单片机
 
 
 //
@@ -126,15 +130,45 @@ int main(int argc, char **argv)
 		#ifndef STANDARD_SDL_AVALIABLE
 		    #define STANDARD_SDL_AVALIABLE
 		#endif
+		#ifndef STANDARD_STL_AVALIABLE
+			#define STANDARD_STL_AVALIABLE
+		#endif
 	#else if _MSC_VER<=1200 //MSVC++ 6.0 (Visual Studio 6.0 version 6.0) and before
+		#ifndef STANDARD_SDL_UNAVALIABLE
+			#define STANDARD_SDL_UNAVALIABLE
+		#endif
+		#ifndef STANDARD_STL_UNAVALIABLE
+			#define STANDARD_STL_UNAVALIABLE
+		#endif
 	    #define APPLICATION_VC6_0_FEATURE
 	#endif
 #endif // _MSC_VER
+
+#ifdef __GNUC
+
+#endif // __GNUC
+
+
+#ifdef __ICC
+	#ifndef __ICC
+		#define COMPLIER_ICC
+	#endif // !__ICC
+	#ifndef STANDARD_STL_UNAVALIABLE
+		#define STANDARD_STL_UNAVALIABLE
+	#endif // !STANDARD_STL_UNAVALIABLE
+#endif // __ICC
+
+#ifdef __BORLANDC__
+
+#endif // __BORLANDC__
+
 
 //#define COMPLIER_MSVC
 //#define COMPLIER_GCC
 //#define COMPLIER_ICC
 //#define COMPLIER_MINGW
+//#define COMPLIER_SUNCC
+//#define COMPLIER_BORLANDC
 
 
 //
@@ -187,13 +221,13 @@ return 0;
 #define
 #endif // __openmp
 
-//MULTI PROCESS
+//APPLICATION - MULTI PROCESS
 //#define APPLICATION_OpenMP_AVAILABLE //允许OMP
 //#define APPLICATION_pThread_AVAILABLE //允许pThread
 //#define APPLICATION_MPI_AVAILABLE //允许MPI
 //#define APPLICATION_NUMA_AVAILABLE //允许NUMA
 
-//GUI
+//APPLICATION - GUI
 #ifdef SYSTEM_WINDOWS && COMPLIER_MSVC
 #define APPLICATION_EASYX
 #endif // APPLICATION_EASYX
@@ -202,13 +236,24 @@ return 0;
 //#define APPLICATION_GTK
 //#define APPLICATION_QT
 //#define APPLICATION_OpenGL
+//备注，如何设置当为macos的时候自动关闭opengl？暂不清楚，但是可以在每次试图开启opengl的时候检查一下是否是macos
+//#define APPLICATION_VULKAN  //macos
+//#define APPLICATION_METAL //macos
 //#define APPLICATION_EASYX
+
+//APPLICATION - OTHERS
+//#define APPLICATION_VC6_0_FEATURE
 
 //
 //STANDARD
 //
 
 //#define STANDARD_SDL_AVALIABLE  //开C++11的sdl检查，目前仅支持MSVC
+//#define STANDARD_SDL_UNAVALIABLE  //不支持SDL
+//#define STANDARD_STL_AVALIABLE  //仅限C++，并不包括C。部分老旧编译器和科学编译器不支持STL.(MSVC7/IC8 and earlier)
+//#define STANDARD_STL_UNAVALIABLE  //不支持STL
+//#define STANDARD_EXCEPTIONS_AVALIABLE  //支持异常
+//#define STANDARD_EXCEPTIONS_UNAVALIABLE  //不支持异常
 
 //
 //REFERENCE
