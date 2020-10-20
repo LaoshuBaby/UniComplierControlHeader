@@ -18,8 +18,16 @@
 #define RELEASE
 #endif
 
+#ifdef __cplusplus
+#define CPP
+#else
+#define C
+#endif // __cplusplus
+
+
+//#define C
+//#define CPP
 //#define DEBUG
-//#define DEBUG_ARGUMENT
 //#define RELEASE
 //#define PUBLISH
 
@@ -39,6 +47,24 @@
 //采用检测头文件中定义的方式来自动化定义系统控制
 //
 
+#ifndef WINVER
+#define WINVER 0x0400			// Specifies that the minimum required platform is Windows 95 and Windows NT 4.0.
+#endif
+
+#ifndef _WIN32_WINNT
+#define _WIN32_WINNT 0x0500		// Specifies that the minimum required platform is Windows 2000.
+#endif
+
+#ifndef _WIN32_WINDOWS
+#define _WIN32_WINDOWS 0x0410	// Specifies that the minimum required platform is Windows 98.
+#endif
+
+#ifdef UNICODE
+//UNICODE
+#else
+//ASCII
+#endif
+
 #ifdef _WIN32
 #ifndef SYSTEM_WINDOWS
 #define SYSTEM_WINDOWS
@@ -55,10 +81,10 @@
 #endif // !SYSTEM_WINDOWS
 #endif // _WIN32_WINNT
 
-#ifdef linux
-    #define SYSTEM_LINUX
-#ifdef __linux__
-    #define SYSTEM_LINUX
+#ifdef ( linux or __linux__ or _linux_ or _linux or __linux )
+#ifndef SYSTEM_LINUX
+#define SYSTEM_LINUX
+#endif // !SYSTEM_LINUX
 	
 #include <sys/utsname.h>
 #include <stdio.h>
@@ -72,6 +98,7 @@ int main(int argc, char **argv)
 	{
 		perror("uname");
 		exit(1);
+#error can not use
 	}
 
 	printf("sysname:%s\n", buf.sysname);
@@ -84,15 +111,40 @@ int main(int argc, char **argv)
 }
 #endif // linux
 
+#ifdef _unix or _unix_ or _UNIX or _UNIX_
+#ifndef SYSTEM_UNIX
+#define SYSTEM_UNIX
+#endif // !SYSTEM_UNIX
+#endif // UNIX
+
+
 #ifdef __sun
-    #define SYSTEM_SOLARIS
+#ifndef SYSTEM_SOLARIS
+#define SYSTEM_SOLARIS
+#endif // !SYSTEM_SOLARIS
 #endif // __sun
+
+#ifdef __APPLE__
+#ifndef SYSTEM_IOS
+#define SYSTEM_IOS
+#endif // !SYSTEM_IOS
+#endif // __APPLE__
+
+#ifdef __ANDROID__
+#ifndef SYSTEM_ANDROID
+#define SYSTEM_ANDROID
+#endif // !SYSTEM_ANDROID
+#endif // __ANDROID__
+
+
 
 //#define SYSTEM_WINDOWS
 //#define SYSTEM_LINUX
 //#define SYSTEM_UNIX
 //#define SYSTEM_MACOS
 //#define SYSTEM_IPADOS
+//#define SYSTEM_IOS
+//#define SYSTEM_ANDROID
 //#define SYSTEM_SOLARIS
 //#define SYSTEM_OTHERS
 //#define SYSTEM_MCU //单片机(无操作系统)
@@ -119,7 +171,7 @@ int main(int argc, char **argv)
 //通过各种标记进行检测
 //
 
-#ifdef _MSC_VER
+#ifdef _MSC_VER or _MSVC_
 	#ifndef COMPLIER_MSVC
 	    #define COMPLIER_MSVC
 	#endif // !COMPLIER_MSVC
@@ -144,7 +196,7 @@ int main(int argc, char **argv)
 	#endif
 #endif // _MSC_VER
 
-#ifdef __GNUC
+#ifdef __GNUC or __GNUC__
 
 #endif // __GNUC
 
@@ -218,7 +270,7 @@ return 0;
 //
 
 #ifdef __openmp
-#define
+#define APPLICATION_OpenMP_AVAILABLE
 #endif // __openmp
 
 //APPLICATION - MULTI PROCESS
@@ -248,20 +300,31 @@ return 0;
 //STANDARD
 //
 
+#if __cplusplus >=201103L
+#ifndef STANDARD_SDL_AVALIABLE
+#define STANDARD_SDL_AVALIABLE
+#endif
+#endif
+
 //#define STANDARD_SDL_AVALIABLE  //开C++11的sdl检查，目前仅支持MSVC
 //#define STANDARD_SDL_UNAVALIABLE  //不支持SDL
 //#define STANDARD_STL_AVALIABLE  //仅限C++，并不包括C。部分老旧编译器和科学编译器不支持STL.(MSVC7/IC8 and earlier)
 //#define STANDARD_STL_UNAVALIABLE  //不支持STL
 //#define STANDARD_EXCEPTIONS_AVALIABLE  //支持异常
 //#define STANDARD_EXCEPTIONS_UNAVALIABLE  //不支持异常
+//#define STANDARD_UNICODE_AVALIABLE
+
+//对于__cplusplus
+//c++ 98中，是199711L（很多版本都是这个值）
+//c++ 11中，是201103L
 
 //
 //REFERENCE
 //
 
-//https://docs.microsoft.com/en-us/cpp/porting/modifying-winver-and-win32-winnt?view=vs-2019
-//https://en.wikipedia.org/wiki/Microsoft_Visual_C%2B%2B
-
+https://docs.microsoft.com/en-us/cpp/porting/modifying-winver-and-win32-winnt?view=vs-2019
+https://en.wikipedia.org/wiki/Microsoft_Visual_C%2B%2B
 https://docs.microsoft.com/en-us/windows/win32/api/winnls/nf-winnls-getsystemdefaultlangid
 https://docs.microsoft.com/en-us/windows/win32/api/winnls/nf-winnls-getuserdefaultlangid
-https://docs.microsoft.com/en-us/windows/win32/msi/systemlanguageid
+https://docs.microsoft.com/en-us/windows/win32/msi/
+https://sourceforge.net/p/predef/wiki/Architectures/
