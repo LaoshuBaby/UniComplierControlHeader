@@ -237,21 +237,25 @@ int main(int argc, char **argv)
 
 #pragma comment(lib,"Kernel32.lib")
 
-LANGID lid = GetSystemDefaultLangID(); // 获取系统默认ID
-switch (lid)
+LANGID SysLang = GetSystemDefaultLangID(); // 获取系统默认ID
+LANGID UsrLang = GetUserDefaultLangID(); // 获取用户默认ID
+switch(lid)
 {
 	case 0x0804:
+	{
 #define zh_CN
 #define LANGUAGE_zh_CN
 #pragma  message("zh_CN")
 		break;
+	}
 	case 0x0409:
+	{
 #define en_US
 #define LANGUAGE_en_US
 #pragma  message("en_US")
 		break;
+	}
 }
-return 0;
 #else
 #define zh_CN
 #define LANGUAGE_zh_CN
@@ -322,9 +326,9 @@ return 0;
 //REFERENCE
 //
 
-https://docs.microsoft.com/en-us/cpp/porting/modifying-winver-and-win32-winnt?view=vs-2019
-https://en.wikipedia.org/wiki/Microsoft_Visual_C%2B%2B
-https://docs.microsoft.com/en-us/windows/win32/api/winnls/nf-winnls-getsystemdefaultlangid
-https://docs.microsoft.com/en-us/windows/win32/api/winnls/nf-winnls-getuserdefaultlangid
-https://docs.microsoft.com/en-us/windows/win32/msi/
-https://sourceforge.net/p/predef/wiki/Architectures/
+//https://docs.microsoft.com/en-us/cpp/porting/modifying-winver-and-win32-winnt?view=vs-2019
+//https://en.wikipedia.org/wiki/Microsoft_Visual_C%2B%2B
+//https://docs.microsoft.com/en-us/windows/win32/api/winnls/nf-winnls-getsystemdefaultlangid
+//https://docs.microsoft.com/en-us/windows/win32/api/winnls/nf-winnls-getuserdefaultlangid
+//https://docs.microsoft.com/en-us/windows/win32/msi/
+//https://sourceforge.net/p/predef/wiki/Architectures/
