@@ -1,13 +1,13 @@
 #pragma once
 
-//���ļ�����Ϊ��һ��ͨ�õĽ����ƽ̨�ṩ��ͷ��Ϣת��Ϊһ���������ڲ��ý�Ϊ�׶�������д�ɵĽӿ�
-//���������������ַ��ӵ�ͷ�ļ�Ԥ����ָ�ֻ��Ҫ����
-//��ͷ�ļ��еĺ궨��Ϊ�������к궨�壬����ͬʱ���ڴ����Ⱥ�ϸ���ȵĺ�ͬʱ������
+//本文件作用为起到一个通用的将多个平台提供的头信息转化为一个本程序内部用较为易懂的语言写成的接口
+//开发者无需记忆各种繁杂的头文件预处理指令，只需要负责
+//本头文件中的宏定义为非排他行宏定义，可能同时存在粗粒度和细粒度的宏同时被定义
 
 //
 //BASIC
-//Ĭ�ϲ��ֹ�����
-//�������ݿ��ں������Զ�����
+//默认不手工开启
+//部分内容可在后文中自动定义
 //
 
 #ifdef _DEBUG
@@ -33,18 +33,18 @@
 
 //
 //MODE
-//Ĭ���ֹ�����
+//默认手工开启
 //
 
-#define MODE_MILD      //��һ�㣬�ȹ�
-//#define MODE_VIOLENT //�������壬�����ø�����ܵ�ʵ���Լ���
-//#define MODE_ARGUMENT //��������
-//#define MODE_NOLOGO //����LOGO
+#define MODE_MILD      //稳一点，先过
+//#define MODE_VIOLENT //激进主义，将采用更多可能的实验性技术
+//#define MODE_ARGUMENT //允许传参
+//#define MODE_NOLOGO //不带LOGO
 
 //
 //SYSTEM & ARCHITECTURE
-//Ĭ�ϲ��ֹ�����
-//���ü��ͷ�ļ��ж���ķ�ʽ���Զ�������ϵͳ����
+//默认不手工开启
+//采用检测头文件中定义的方式来自动化定义系统控制
 //
 
 #ifndef WINVER
@@ -147,28 +147,28 @@ int main(int argc, char **argv)
 //#define SYSTEM_ANDROID
 //#define SYSTEM_SOLARIS
 //#define SYSTEM_OTHERS
-//#define SYSTEM_MCU //��Ƭ��(�޲���ϵͳ)
+//#define SYSTEM_MCU //单片机(无操作系统)
 
-//#define ARCHITECTURE_x86 //x86 16λ/32λ CISC����ָ�
-//#define ARCHITECTURE_8086 //x86 16λ CISC����ָ�
-//#define ARCHITECTURE_i386 //x86 32λ CISC����ָ�
-//#define ARCHITECTURE_i486 //x86 32λ CISC����ָ�
-//#define ARCHITECTURE_i586 //x86 32λ CISC����ָ�
-//#define ARCHITECTURE_i686 //x86 32λ CISC����ָ�
-//#define ARCHITECTURE_ia64 //Itanium 64λ CISC����ָ�
-//#define ARCHITECTURE_x64 //x64 64λ CISC����ָ�
-//#define ARCHITECTURE_x86_64 //x64 64λ CISC����ָ�
-//#define ARCHITECTURE_amd64 //x64 64λ CISC����ָ�
-//#define ARCHITECTURE_arm //arm Any RISC����ָ�
-//#define ARCHITECTURE_MIPS //mips Any RISC����ָ�
-//#define ARCHITECTURE_RISC_V //RISCV Any RISC����ָ�
-//#define ARCHITECTURE_STM32 //��Ƭ��
+//#define ARCHITECTURE_x86 //x86 16位/32位 CISC复杂指令集
+//#define ARCHITECTURE_8086 //x86 16位 CISC复杂指令集
+//#define ARCHITECTURE_i386 //x86 32位 CISC复杂指令集
+//#define ARCHITECTURE_i486 //x86 32位 CISC复杂指令集
+//#define ARCHITECTURE_i586 //x86 32位 CISC复杂指令集
+//#define ARCHITECTURE_i686 //x86 32位 CISC复杂指令集
+//#define ARCHITECTURE_ia64 //Itanium 64位 CISC复杂指令集
+//#define ARCHITECTURE_x64 //x64 64位 CISC复杂指令集
+//#define ARCHITECTURE_x86_64 //x64 64位 CISC复杂指令集
+//#define ARCHITECTURE_amd64 //x64 64位 CISC复杂指令集
+//#define ARCHITECTURE_arm //arm Any RISC精简指令集
+//#define ARCHITECTURE_MIPS //mips Any RISC精简指令集
+//#define ARCHITECTURE_RISC_V //RISCV Any RISC精简指令集
+//#define ARCHITECTURE_STM32 //单片机
 
 
 //
 //COMPLIER
-//Ĭ�ϲ��ֹ�����
-//ͨ�����ֱ�ǽ��м��
+//默认不手工开启
+//通过各种标记进行检测
 //
 
 #ifdef _MSC_VER or _MSVC_
@@ -225,11 +225,11 @@ int main(int argc, char **argv)
 
 //
 //LANGUAGE
-//Ĭ���ֹ�����
-//�ڿ�����θ���ϵͳ�����Լ�ͷ�ļ���������ԣ����ܱȽ����ѣ������˹�ָ��
+//默认手工开启
+//在考虑如何根据系统环境以及头文件来检测语言，可能比较困难，初步人工指定
 //
 
-//�Զ����в�ʶ���ж�
+//自动运行并识别判断
 #ifdef SYSTEM_WINDOWS
 #include <stdio.h>
 #include <Windows.h>
@@ -237,8 +237,8 @@ int main(int argc, char **argv)
 
 #pragma comment(lib,"Kernel32.lib")
 
-LANGID SysLang = GetSystemDefaultLangID(); // ��ȡϵͳĬ��ID
-LANGID UsrLang = GetUserDefaultLangID(); // ��ȡ�û�Ĭ��ID
+LANGID SysLang = GetSystemDefaultLangID(); // 获取系统默认ID
+LANGID UsrLang = GetUserDefaultLangID(); // 获取用户默认ID
 switch(lid)
 {
 	case 0x0804:
@@ -270,7 +270,7 @@ switch(lid)
 
 //
 //APPLICATION
-//�����˳���Ӧ�öԿ�����������������Ϣ
+//记载了常见应用对开发环境到底需求信息
 //
 
 #ifdef __openmp
@@ -278,10 +278,10 @@ switch(lid)
 #endif // __openmp
 
 //APPLICATION - MULTI PROCESS
-//#define APPLICATION_OpenMP_AVAILABLE //����OMP
-//#define APPLICATION_pThread_AVAILABLE //����pThread
-//#define APPLICATION_MPI_AVAILABLE //����MPI
-//#define APPLICATION_NUMA_AVAILABLE //����NUMA
+//#define APPLICATION_OpenMP_AVAILABLE //允许OMP
+//#define APPLICATION_pThread_AVAILABLE //允许pThread
+//#define APPLICATION_MPI_AVAILABLE //允许MPI
+//#define APPLICATION_NUMA_AVAILABLE //允许NUMA
 
 //APPLICATION - INTEL
 //#define APPLICATION_SSSE3_AVAILABLE
@@ -304,7 +304,7 @@ switch(lid)
 //#define APPLICATION_GTK
 //#define APPLICATION_QT
 //#define APPLICATION_OpenGL
-//��ע��������õ�Ϊmacos��ʱ���Զ��ر�opengl���ݲ���������ǿ�����ÿ����ͼ����opengl��ʱ����һ���Ƿ���macos
+//备注，如何设置当为macos的时候自动关闭opengl？暂不清楚，但是可以在每次试图开启opengl的时候检查一下是否是macos
 //#define APPLICATION_VULKAN  //macos
 //#define APPLICATION_METAL //macos
 //#define APPLICATION_EASYX
@@ -322,17 +322,17 @@ switch(lid)
 #endif
 #endif
 
-//#define STANDARD_SDL_AVALIABLE  //��C++11��sdl��飬Ŀǰ��֧��MSVC
-//#define STANDARD_SDL_UNAVALIABLE  //��֧��SDL
-//#define STANDARD_STL_AVALIABLE  //����C++����������C�������Ͼɱ������Ϳ�ѧ��������֧��STL.(MSVC7/IC8 and earlier)
-//#define STANDARD_STL_UNAVALIABLE  //��֧��STL
-//#define STANDARD_EXCEPTIONS_AVALIABLE  //֧���쳣
-//#define STANDARD_EXCEPTIONS_UNAVALIABLE  //��֧���쳣
+//#define STANDARD_SDL_AVALIABLE  //开C++11的sdl检查，目前仅支持MSVC
+//#define STANDARD_SDL_UNAVALIABLE  //不支持SDL
+//#define STANDARD_STL_AVALIABLE  //仅限C++，并不包括C。部分老旧编译器和科学编译器不支持STL.(MSVC7/IC8 and earlier)
+//#define STANDARD_STL_UNAVALIABLE  //不支持STL
+//#define STANDARD_EXCEPTIONS_AVALIABLE  //支持异常
+//#define STANDARD_EXCEPTIONS_UNAVALIABLE  //不支持异常
 //#define STANDARD_UNICODE_AVALIABLE
 
-//����__cplusplus
-//c++ 98�У���199711L���ܶ�汾�������ֵ��
-//c++ 11�У���201103L
+//对于__cplusplus
+//c++ 98中，是199711L（很多版本都是这个值）
+//c++ 11中，是201103L
 
 //
 //REFERENCE
